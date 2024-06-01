@@ -12,25 +12,9 @@ function App() {
 
     setContact(
       prevent => {
-        if (name === "fName") {
-          return {
-            fName: value,
-            lName: prevent.lName,
-            email: prevent.email
-          }
-        } else if (name === "lName") {
-          return {
-            fName: prevent.fName,
-            lName: value,
-            email: prevent.email
-          }
-        } else if (name === "email") {
-          return {
-            fName: prevent.fName,
-            lName: prevent.lName,
-            email: value
-          }
-
+        return {
+          ...prevent,
+          [name]: value
         }
       }
     );
