@@ -1,35 +1,51 @@
 import React, { useState } from "react";
 
 function App() {
-  const [color, colorChanger] = useState(false);
-  const [heading, nFunction] = useState("");
-  const [name, headingChange] = useState("");
+  const [fullName, setName] = useState({
+    fName: "",
+    lName: ""
+  });
 
-  const bgChange = () => colorChanger(true);
-  const bgBack = () => colorChanger(false);
-
-  const clickFunction = (event) => {
-    nFunction(name);
-    event.preventDefault();
+  const detect = event => {
+    const { value, name } = event.target;
+    setName(
+      preValue => {
+        if (name === "fName") {
+          return {
+            fName: value,
+            lName: preValue.lName
+          };
+        } else if (name === "lName") {
+          return {
+            fName: preValue.fName,
+            lName: value
+          };
+        }
+      });
   };
-  const detect = (event) => headingChange(event.target.value);
 
   return (
     <div className="container">
-      <h1>Hello {heading}</h1>
+      <h1>Hello {fullName.fName} {fullName.lName}</h1>
       <form>
         <input
+          name="fName"
+          placeholder="First Name"
           type="text"
-          placeholder="What's your name?"
           onChange={detect}
-          value={name}
+          value={fullName.fName}
+
+        />
+        <input
+          name="lName"
+          placeholder="Last Name"
+          type="text"
+          onChange={detect}
+          value={fullName.lName}
+
         />
         <button
-          onClick={clickFunction}
           type="submit"
-          onMouseOut={bgBack}
-          onMouseOver={bgChange}
-          style={{ backgroundColor: color ? "black" : "white" }}
         >Submit</button>
       </form>
     </div>
